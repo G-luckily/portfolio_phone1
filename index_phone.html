@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <!-- Crucial for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>郭林峰 Guo Linfeng | Mobile Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Serif+SC:wght@400;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'zju-blue': '#003F88',
+                        'zju-light': '#E6F0FF',
+                        'hust-green': '#00703C',
+                        'hust-light': '#E6F7EF',
+                        'amber-accent': '#D97706',
+                        'slate-bg': '#F8FAFC',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['"Playfair Display"', '"Noto Serif SC"', 'serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'breathe': 'breathe 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        breathe: {
+                            '0%, 100%': { boxShadow: '0 0 10px rgba(217, 119, 6, 0.2)' },
+                            '50%': { boxShadow: '0 0 20px rgba(217, 119, 6, 0.5)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Mobile Scrollbar Hide */
+        ::-webkit-scrollbar { display: none; }
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Glassmorphism Mobile Nav */
+        .mobile-nav-glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Mobile Menu Drawer Transition */
+        #mobile-menu {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .competency-tag {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.9);
+            color: #D97706;
+            padding: 3px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            display: inline-block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased overflow-x-hidden">
+
+    <!-- ================= MOBILE NAVBAR ================= -->
+    <nav class="fixed w-full z-50 top-0 mobile-nav-glass h-16 flex items-center justify-between px-5">
+        <div class="flex items-center gap-3">
+            <!-- Profile Thumbnail in Nav (Visible on scroll) -->
+            <div class="w-8 h-8 rounded-full overflow-hidden border border-gray-200 shadow-sm">
+                <img src="profile.jpg" onerror="this.src='https://ui-avatars.com/api/?name=G+L&background=003F88&color=fff'" class="w-full h-full object-cover">
+            </div>
+            <span class="text-lg font-serif font-bold text-zju-blue tracking-wide truncate max-w-[150px]" data-i18n="name_simple">GUO LINFENG</span>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <button onclick="toggleLanguage()" class="text-xs font-bold text-gray-500 border border-gray-200 px-2 py-1 rounded bg-white">EN/中</button>
+            <button onclick="toggleMenu()" class="text-gray-700 focus:outline-none">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer (Hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-white transform translate-x-full pt-20 px-6 flex flex-col">
+        <div class="flex flex-col space-y-6 text-xl font-serif font-bold text-gray-800 mt-8">
+            <a onclick="closeMenu()" href="#hero" class="flex justify-between border-b border-gray-100 pb-2"><span data-i18n="menu_home">首页 Home</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300 mt-2"></i></a>
+            <a onclick="closeMenu()" href="#education" class="flex justify-between border-b border-gray-100 pb-2"><span data-i18n="nav_edu">教育 Education</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300 mt-2"></i></a>
+            <a onclick="closeMenu()" href="#leadership" class="flex justify-between border-b border-gray-100 pb-2"><span data-i18n="nav_lead">学生工作 Leadership</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300 mt-2"></i></a>
+            <a onclick="closeMenu()" href="#internships" class="flex justify-between border-b border-gray-100 pb-2"><span data-i18n="nav_exp">实习 Experience</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300 mt-2"></i></a>
+            <a onclick="closeMenu()" href="#research" class="flex justify-between border-b border-gray-100 pb-2"><span data-i18n="nav_res">科研 Research</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300 mt-2"></i></a>
+            <a onclick="closeMenu()" href="#social-practice" class="flex justify-between border-b border-gray-100 pb-2"><span data-i18n="nav_soc">实践 Practice</span> <i class="fa-solid fa-chevron-right text-xs text-gray-300 mt-2"></i></a>
+        </div>
+        <button onclick="closeMenu()" class="mt-auto mb-10 w-full py-3 bg-gray-100 rounded-full text-sm font-bold text-gray-500">Close Menu</button>
+    </div>
+
+    <!-- ================= HERO SECTION (Mobile Cover) ================= -->
+    <section id="hero" class="relative min-h-[95vh] flex flex-col justify-center items-center pt-16 overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-slate-900/40"></div>
+
+        <div class="relative z-10 text-center px-6 animate-fade-in-up">
+            <!-- Profile Photo -->
+            <div class="relative inline-block mb-6">
+                <div class="absolute -inset-1 bg-gradient-to-r from-amber-400 to-blue-400 rounded-full opacity-70 blur-md animate-breathe"></div>
+                <img src="profile.jpg" onerror="this.src='https://ui-avatars.com/api/?name=G+L&background=D97706&color=fff&size=256'" class="relative w-32 h-32 rounded-full border-4 border-white/20 object-cover shadow-2xl mx-auto">
+                <!-- Status Badge -->
+                <div class="absolute bottom-0 right-0 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-2 border-slate-900 shadow-lg">
+                    OPEN
+                </div>
+            </div>
+
+            <p class="text-amber-400 text-[10px] tracking-[0.2em] font-bold mb-2 uppercase opacity-90">Academic & Professional</p>
+            <h1 class="text-4xl font-serif font-bold text-white mb-2 tracking-wide" data-i18n="name_br">郭林峰</h1>
+            <p class="text-gray-300 text-sm font-light mb-6" data-i18n="hero_title">浙江大学 公共管理学院 | 2024级硕士</p>
+            
+            <div class="flex flex-wrap justify-center gap-2 mb-8">
+                <span class="bg-white/10 backdrop-blur border border-white/20 text-white px-3 py-1 rounded-full text-xs">⚡ 执行力 Max</span>
+                <span class="bg-white/10 backdrop-blur border border-white/20 text-white px-3 py-1 rounded-full text-xs">📚 学术严谨</span>
+                <span class="bg-white/10 backdrop-blur border border-white/20 text-white px-3 py-1 rounded-full text-xs">🤝 组织领导力</span>
+            </div>
+
+            <div class="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-8"></div>
+            
+            <p class="text-gray-400 text-xs italic max-w-xs mx-auto" data-i18n="quote">"致力于公共价值创造与社会治理创新"</p>
+            
+            <!-- Scroll Down Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <i class="fa-solid fa-chevron-down text-white/50 text-xl"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CONTENT CONTAINER ================= -->
+    <div class="px-5 pb-20 bg-slate-50">
+
+        <!-- 1. Education Section -->
+        <section id="education" class="pt-12 scroll-mt-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-1 h-8 bg-zju-blue rounded-full"></div>
+                <h2 class="text-2xl font-serif font-bold text-gray-900" data-i18n="sec_edu_title">教育背景</h2>
+            </div>
+
+            <div class="space-y-5">
+                <!-- ZJU Card -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-zju-blue relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full -mr-10 -mt-10 opacity-50"></div>
+                    <div class="flex justify-between items-start mb-2 relative z-10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-zju-blue text-white rounded-lg flex items-center justify-center text-sm"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 text-base leading-tight" data-i18n="zju_name">浙江大学</h3>
+                                <span class="text-[10px] text-gray-400 block mt-0.5"><i class="fa-solid fa-location-dot"></i> <span data-i18n="loc_hz">杭州</span></span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] bg-blue-50 text-zju-blue px-2 py-0.5 rounded font-bold">2024-2027</span>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-3" data-i18n="zju_major">公共管理学院 | 社会工作硕士</p>
+                    <div class="bg-slate-50 p-3 rounded-lg flex justify-between items-center text-xs">
+                        <div>
+                            <p class="text-gray-400 mb-0.5" data-i18n="rank_label">专业排名</p>
+                            <p class="text-zju-blue font-bold text-sm">3/30</p>
+                        </div>
+                        <div class="h-6 w-px bg-gray-200"></div>
+                        <div>
+                            <p class="text-gray-400 mb-0.5" data-i18n="score_label">加权平均分</p>
+                            <p class="text-gray-900 font-bold text-sm">92.69</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HUST Card -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-hust-green relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-green-50 rounded-full -mr-10 -mt-10 opacity-50"></div>
+                    <div class="flex justify-between items-start mb-2 relative z-10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-hust-green text-white rounded-lg flex items-center justify-center text-sm"><i class="fa-solid fa-tree"></i></div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 text-base leading-tight" data-i18n="hust_name">华中科技大学</h3>
+                                <span class="text-[10px] text-gray-400 block mt-0.5"><i class="fa-solid fa-location-dot"></i> <span data-i18n="loc_wh">武汉</span></span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] bg-green-50 text-green-700 px-2 py-0.5 rounded font-bold">2020-2024</span>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-3" data-i18n="hust_major">社会学院 (主修) & 经济学院 (双学位)</p>
+                    <div class="bg-slate-50 p-3 rounded-lg flex justify-between items-center text-xs">
+                        <div>
+                            <p class="text-gray-400 mb-0.5" data-i18n="rank_label">专业排名</p>
+                            <p class="text-hust-green font-bold text-sm">2/19</p>
+                        </div>
+                        <div class="h-6 w-px bg-gray-200"></div>
+                        <div>
+                            <p class="text-gray-400 mb-0.5">GPA</p>
+                            <p class="text-gray-900 font-bold text-sm">3.93/4.00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Leadership Section (Swapped) -->
+        <section id="leadership" class="pt-12 scroll-mt-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-1 h-8 bg-slate-800 rounded-full"></div>
+                <h2 class="text-2xl font-serif font-bold text-gray-900" data-i18n="sec_lead_title">学生工作</h2>
+            </div>
+
+            <div class="relative pl-4 border-l border-gray-200 space-y-8">
+                <!-- ZJU Group -->
+                <div>
+                    <div class="absolute -left-[5px] w-2.5 h-2.5 bg-zju-blue rounded-full ring-4 ring-white"></div>
+                    <h4 class="text-sm font-bold text-zju-blue mb-3 pl-2" data-i18n="lead_zju_title">浙江大学阶段</h4>
+                    <div class="space-y-3 pl-2">
+                        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
+                            <p class="font-bold text-gray-800 text-xs" data-i18n="role_zju_1">研究生团总支组织部副部长</p>
+                            <p class="text-[10px] text-gray-400 mt-1">2024.09 - 2025.09</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
+                            <p class="font-bold text-gray-800 text-xs" data-i18n="role_zju_2">丹青学园兼职辅导员</p>
+                            <p class="text-[10px] text-gray-400 mt-1">2025.10 - 2026.10</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
+                            <p class="font-bold text-gray-800 text-xs" data-i18n="role_zju_3">社工研究生党支部组织委员</p>
+                            <p class="text-[10px] text-gray-400 mt-1">2024.10 - 2025.10</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HUST Group -->
+                <div>
+                    <div class="absolute -left-[5px] w-2.5 h-2.5 bg-gray-400 rounded-full ring-4 ring-white"></div>
+                    <h4 class="text-sm font-bold text-gray-600 mb-3 pl-2 mt-6" data-i18n="lead_hust_title">华中科技大学阶段</h4>
+                    <div class="space-y-3 pl-2">
+                        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm border-l-2 border-l-amber-400">
+                            <div class="flex justify-between">
+                                <p class="font-bold text-gray-800 text-xs" data-i18n="role_hust_1">英语协会会长</p>
+                                <span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold">五星社团</span>
+                            </div>
+                            <p class="text-[10px] text-gray-500 mt-1 line-clamp-2" data-i18n="role_hust_1_d">带领团队获年度最高荣誉，个人获“优秀社团负责人”。</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm border-l-2 border-l-red-400">
+                            <div class="flex justify-between">
+                                <p class="font-bold text-gray-800 text-xs" data-i18n="role_hust_2">本科生党支部书记</p>
+                                <span class="text-[9px] bg-red-100 text-red-800 px-1.5 py-0.5 rounded font-bold">样板党支部</span>
+                            </div>
+                            <p class="text-[10px] text-gray-500 mt-1" data-i18n="role_hust_2_d">支部荣获年度最高荣誉“本科生样板党支部”。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Internships Section -->
+        <section id="internships" class="pt-12 scroll-mt-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-1 h-8 bg-amber-500 rounded-full"></div>
+                <h2 class="text-2xl font-serif font-bold text-gray-900" data-i18n="sec_exp_title">实习经历</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Kuaishou -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden">
+                    <div class="absolute -right-2 -top-2 opacity-10"><i class="fa-solid fa-video text-6xl text-amber-500"></i></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-900" data-i18n="ks_name">快手 (Kuaishou)</h3>
+                                <p class="text-[10px] text-gray-500" data-i18n="ks_role">HRBP实习生 | 游戏业务中心</p>
+                            </div>
+                            <span class="competency-tag text-[9px]">Recruitment SOP</span>
+                        </div>
+                        <div class="space-y-2 mt-3">
+                            <div class="bg-amber-50/50 p-2.5 rounded-lg">
+                                <p class="text-[10px] text-amber-800 font-bold mb-0.5"><i class="fa-solid fa-bullseye mr-1"></i> <span data-i18n="ks_point1_t">社招交付</span></p>
+                                <p class="text-[10px] text-gray-600" data-i18n="ks_point1_d">独立负责核心岗。日均筛选 10+，产出Offer 12 人。</p>
+                            </div>
+                            <div class="bg-amber-50/50 p-2.5 rounded-lg">
+                                <p class="text-[10px] text-amber-800 font-bold mb-0.5"><i class="fa-solid fa-network-wired mr-1"></i> <span data-i18n="ks_point2_t">校招运营</span></p>
+                                <p class="text-[10px] text-gray-600" data-i18n="ks_point2_d">主导 8 场线下双选会，建立渠道数据台账。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ByteDance -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden">
+                    <div class="absolute -right-2 -top-2 opacity-10"><i class="fa-brands fa-tiktok text-6xl text-teal-500"></i></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-900" data-i18n="bd_name">字节跳动</h3>
+                                <p class="text-[10px] text-gray-500" data-i18n="bd_role">人才交付实习生 | 招聘中心</p>
+                            </div>
+                            <span class="competency-tag text-[9px] text-teal-600 border-teal-200">Data Driven</span>
+                        </div>
+                        <ul class="space-y-2 mt-2 text-[11px] text-gray-600 list-disc list-inside">
+                            <li data-i18n="bd_point1">累计Offer 47人，绩效排名实习生 Top 3。</li>
+                            <li data-i18n="bd_point2">担任项目 Owner，基于漏斗数据倒逼招聘进度。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Others -->
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                        <h4 class="text-xs font-bold text-gray-900 flex items-center gap-2"><i class="fa-regular fa-building text-red-500"></i> <span data-i18n="crcc_name">中铁建房地产集团</span></h4>
+                        <p class="text-[10px] text-gray-500 mt-1" data-i18n="crcc_desc">撰写领导发言稿/新闻稿 10+ 篇，协助开展“三会一课”。</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                        <h4 class="text-xs font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-people-group text-green-500"></i> <span data-i18n="leda_name">武汉市乐达社工中心</span></h4>
+                        <p class="text-[10px] text-gray-500 mt-1" data-i18n="leda_desc">引导 100+ 新就业群体参与治理，项目获“洪山区十大志愿项目”。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Research & Practice (Tabs for space saving) -->
+        <section id="research" class="pt-12 scroll-mt-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-1 h-8 bg-purple-600 rounded-full"></div>
+                <h2 class="text-2xl font-serif font-bold text-gray-900" data-i18n="sec_res_title">科研与实践</h2>
+            </div>
+
+            <!-- Research Cards -->
+            <div class="space-y-3 mb-8">
+                <div class="bg-purple-50/50 p-4 rounded-xl border border-purple-100">
+                    <span class="text-[9px] bg-white text-purple-700 px-1.5 py-0.5 rounded border border-purple-200 mb-1 inline-block">学术专著</span>
+                    <h4 class="text-xs font-bold text-gray-900" data-i18n="paper1_t">《包容性社会治理》第五章</h4>
+                    <p class="text-[10px] text-gray-500 mt-0.5" data-i18n="paper1_d">第一作者 | 2024.11-2025.03</p>
+                </div>
+                <div class="bg-red-50/50 p-4 rounded-xl border border-red-100">
+                    <span class="text-[9px] bg-white text-red-700 px-1.5 py-0.5 rounded border border-red-200 mb-1 inline-block">国家级奖项</span>
+                    <h4 class="text-xs font-bold text-gray-900" data-i18n="comp1_t">第十八届“挑战杯”红色专项</h4>
+                    <p class="text-[10px] text-gray-500 mt-0.5">全国三等奖 | 排序第六</p>
+                </div>
+            </div>
+
+            <!-- Social Practice (Dark Card) -->
+            <div id="social-practice" class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-5 text-white shadow-lg">
+                <h3 class="text-sm font-bold mb-4 flex items-center gap-2 text-amber-400">
+                    <i class="fa-solid fa-hand-holding-heart"></i> 
+                    <span data-i18n="sec_soc_title">社会实践</span>
+                </h3>
+                <ul class="space-y-4 text-[11px] text-gray-300">
+                    <li class="flex gap-3">
+                        <span class="text-amber-500 font-bold min-w-[45px]">2025.07</span>
+                        <div>
+                            <span class="text-white block font-medium" data-i18n="soc_1">浙大“黄土地计划”赴嘉善实践团团长</span>
+                            <span class="text-[9px] bg-amber-500/20 text-amber-300 px-1 rounded">Team Leader</span>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="font-bold min-w-[45px]">2024.01</span>
+                        <span data-i18n="soc_3">四川广元支教 (微光公益)</span>
+                    </li>
+                </ul>
+                <div class="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
+                    <span class="text-[10px] uppercase tracking-widest text-white/50">Vol. Hours</span>
+                    <span class="text-lg font-bold text-amber-400">161.9h</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. AI Charity (Mobile Optimized) -->
+        <section id="ai-demo" class="pt-12 pb-8">
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                <!-- Image Area (Top) -->
+                <div id="ai-bg-image" class="h-40 bg-gray-200 bg-[url('https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center grayscale transition-all duration-1000 relative">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <div id="flower-garden" class="absolute inset-0"></div>
+                        <span class="text-white/80 text-xs font-light tracking-widest uppercase">AI For Good</span>
+                    </div>
+                </div>
+                
+                <!-- Interaction Area (Bottom) -->
+                <div class="p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-2 leading-tight" data-i18n="ai_title">让我们一起努力为每一处不可见的角落里送出我们的小红花</h2>
+                    <p class="text-xs text-gray-500 mb-4" data-i18n="ai_desc">写下对山区儿童的祝福，AI 将生成一朵数字小红花。</p>
+                    
+                    <div class="relative">
+                        <textarea id="ai-input" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 text-xs focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none resize-none" rows="2" placeholder="写下一句温暖的祝福..."></textarea>
+                        <button onclick="sendFlower()" class="w-full mt-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white py-3 rounded-lg text-sm font-bold shadow-md active:scale-95 transition-transform" data-i18n="ai_btn">
+                            送出祝福
+                        </button>
+                    </div>
+                    <div id="ai-status" class="text-center mt-3 text-[10px] text-gray-400 h-4">System Ready</div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-gray-400 text-[10px] pt-8 pb-10">
+            <p class="font-serif text-zju-blue font-bold tracking-widest mb-1">GUO LINFENG</p>
+            <p>© 2025 Academic Portfolio</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Logic
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('translate-x-full');
+        }
+        function closeMenu() {
+            document.getElementById('mobile-menu').classList.add('translate-x-full');
+        }
+
+        // --- Translations Data (Same as before but simplified keys) ---
+        const translations = {
+            zh: {
+                name_br: "郭林峰",
+                name_simple: "郭林峰",
+                quote: "\"致力于公共价值创造与社会治理创新\"",
+                menu_home: "首页 Home",
+                nav_edu: "教育 Education",
+                nav_exp: "实习 Experience",
+                nav_res: "科研 Research",
+                nav_lead: "学生工作 Leadership",
+                nav_soc: "实践 Practice",
+                hero_title: "浙江大学 公共管理学院 | 2024级硕士",
+                sec_edu_title: "教育背景",
+                zju_name: "浙江大学",
+                zju_major: "公共管理学院 | 社会工作硕士",
+                loc_hz: "杭州",
+                rank_label: "专业排名",
+                score_label: "加权平均分",
+                hust_name: "华中科技大学",
+                hust_major: "社会学院 (主修) & 经济学院 (双学位)",
+                loc_wh: "武汉",
+                sec_exp_title: "实习经历",
+                ks_name: "快手 (Kuaishou)",
+                ks_role: "HRBP实习生 | 游戏业务中心",
+                ks_point1_t: "社招交付",
+                ks_point1_d: "独立负责核心岗。日均筛选 10+，产出Offer 12 人。",
+                ks_point2_t: "校招运营",
+                ks_point2_d: "主导 8 场线下双选会，建立渠道数据台账。",
+                bd_name: "字节跳动",
+                bd_role: "人才交付实习生 | 招聘中心",
+                bd_point1: "累计一线待入职 Offer 47 人，绩效排名实习生 Top 3。",
+                bd_point2: "担任项目 Owner，基于漏斗数据倒逼招聘进度。",
+                crcc_name: "中铁建房地产集团",
+                crcc_desc: "撰写领导发言稿/新闻稿 10+ 篇，协助开展“三会一课”。",
+                leda_name: "武汉市乐达社工中心",
+                leda_desc: "引导 100+ 新就业群体参与治理，项目获“洪山区十大志愿项目”。",
+                sec_res_title: "科研与实践",
+                paper1_t: "《包容性社会治理》第五章",
+                paper1_d: "第一作者 | 专著章节",
+                comp1_t: "第十八届“挑战杯”红色专项",
+                sec_lead_title: "学生工作",
+                lead_zju_title: "浙江大学阶段",
+                role_zju_1: "研究生团总支组织部副部长",
+                role_zju_2: "丹青学园兼职辅导员",
+                role_zju_3: "社工研究生党支部组织委员",
+                lead_hust_title: "华中科技大学阶段",
+                role_hust_1: "英语协会会长",
+                role_hust_1_d: "带领团队获年度最高荣誉，个人获“优秀社团负责人”。",
+                role_hust_2: "本科生党支部书记",
+                role_hust_2_d: "支部荣获年度最高荣誉“本科生样板党支部”。",
+                sec_soc_title: "社会实践",
+                soc_1: "浙大“黄土地计划”赴嘉善实践团团长",
+                soc_2: "浙江省文化广电旅游厅办公室实践",
+                soc_3: "四川广元支教 (微光公益)",
+                soc_4: "北大 CHARLS 项目湖北队",
+                ai_title: "让我们一起努力为每一处不可见的角落里送出我们的小红花",
+                ai_desc: "写下对山区儿童的祝福，AI 将生成一朵数字小红花。",
+                ai_btn: "送出祝福",
+            },
+            en: {
+                name_br: "GUO LINFENG",
+                name_simple: "GUO LINFENG",
+                quote: "\"Dedication to Public Value & Social Innovation\"",
+                menu_home: "Home",
+                nav_edu: "Education",
+                nav_exp: "Experience",
+                nav_res: "Research",
+                nav_lead: "Leadership",
+                nav_soc: "Practice",
+                hero_title: "Zhejiang University | MPA (2024 Cohort)",
+                sec_edu_title: "Education",
+                zju_name: "Zhejiang University",
+                zju_major: "School of Public Affairs | MSW",
+                loc_hz: "Hangzhou",
+                rank_label: "Ranking",
+                score_label: "Avg Score",
+                hust_name: "HUST",
+                hust_major: "Sociology (Major) & Economics",
+                loc_wh: "Wuhan",
+                sec_exp_title: "Experience",
+                ks_name: "Kuaishou",
+                ks_role: "HRBP Intern | Game Center",
+                ks_point1_t: "Recruitment",
+                ks_point1_d: "Owned core roles. 12 offers, 8 onboarded.",
+                ks_point2_t: "Operations",
+                ks_point2_d: "Led 8 job fairs, built data ledger.",
+                bd_name: "ByteDance",
+                bd_role: "TA Intern | Recruitment Ctr",
+                bd_point1: "47 offers generated (Top 3 Intern).",
+                bd_point2: "Project Owner: Optimized hiring process.",
+                crcc_name: "CRCC Real Estate",
+                crcc_desc: "Drafted 10+ speeches. Assisted org meetings.",
+                leda_name: "Leda Social Work",
+                leda_desc: "Guided 100+ participants in governance.",
+                sec_res_title: "Research & Practice",
+                paper1_t: "Inclusive Social Governance: Ch.5",
+                paper1_d: "1st Author | Book Chapter",
+                comp1_t: "18th Challenge Cup (Red Track)",
+                sec_lead_title: "Leadership",
+                lead_zju_title: "Zhejiang University",
+                role_zju_1: "Deputy Minister, Grad Youth League",
+                role_zju_2: "Part-time Counselor",
+                role_zju_3: "Org Committee, Party Branch",
+                lead_hust_title: "HUST Phase",
+                role_hust_1: "President, English Association",
+                role_hust_1_d: "Led team to win '5-Star Club'.",
+                role_hust_2: "Secretary, Party Branch",
+                role_hust_2_d: "Awarded 'Model Party Branch'.",
+                sec_soc_title: "Social Practice",
+                soc_1: "ZJU 'Yellow Earth' Practice (Leader)",
+                soc_2: "Zhejiang Dept of Culture & Tourism",
+                soc_3: "Volunteer Teacher (Sichuan)",
+                soc_4: "Peking Univ CHARLS (Vice Captain)",
+                ai_title: "Let's send our little red flowers to every invisible corner",
+                ai_desc: "Write a blessing. AI will generate a flower.",
+                ai_btn: "Send Blessing",
+            }
+        };
+
+        let currentLang = 'zh';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    if(key === 'name_br' || key === 'bd_point1' || key === 'bd_point2') {
+                        el.innerHTML = translations[currentLang][key];
+                    } else {
+                        el.innerText = translations[currentLang][key];
+                    }
+                }
+            });
+        }
+
+        // AI Demo Logic
+        function sendFlower() {
+            const input = document.getElementById('ai-input');
+            const status = document.getElementById('ai-status');
+            const garden = document.getElementById('flower-garden');
+            const bgImage = document.getElementById('ai-bg-image');
+            
+            if (!input.value.trim()) {
+                status.innerHTML = '<span class="text-red-400">Empty...</span>';
+                return;
+            }
+            
+            status.innerHTML = '<span class="text-amber-400 animate-pulse">AI Analyzing...</span>';
+
+            setTimeout(() => {
+                status.innerHTML = '<span class="text-green-400">Success! Flower +1</span>';
+                
+                // Light up image
+                bgImage.classList.remove('grayscale');
+                
+                // Flower Animation
+                const flower = document.createElement('div');
+                flower.innerText = '🌺';
+                flower.className = 'absolute text-4xl transition-all duration-[2000ms] ease-out opacity-0 drop-shadow-lg';
+                flower.style.left = '50%';
+                flower.style.bottom = '10%';
+                flower.style.transform = 'translateX(-50%)';
+                
+                garden.appendChild(flower);
+                
+                requestAnimationFrame(() => {
+                    flower.style.bottom = '60%';
+                    flower.style.opacity = '1';
+                    flower.style.transform = 'translateX(-50%) scale(1.5)';
+                });
+                
+                setTimeout(() => {
+                    flower.style.opacity = '0';
+                    setTimeout(() => flower.remove(), 1000);
+                }, 2000);
+                
+                input.value = "";
+                setTimeout(() => {
+                    status.innerHTML = 'Ready for next blessing';
+                }, 3000);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
